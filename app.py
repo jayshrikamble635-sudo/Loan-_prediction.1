@@ -1,12 +1,13 @@
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import LabelEncoder
+import streamlit as st
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 
-df = pd.DataFrame({
-    "Gender": ["Male", "Female", "Male"]
-})
+file = st.file_uploader("CSV upload karo", type=["csv"])
 
-le = LabelEncoder()
-df["Gender"] = le.fit_transform(df["Gender"])
+if file is not None:
+    df = pd.read_csv(file)
 
-print(df)
+    le = LabelEncoder()
+    df["Gender"] = le.fit_transform(df["Gender"])
+
+    st.dataframe(df)
